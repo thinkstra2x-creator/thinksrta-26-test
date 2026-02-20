@@ -10,419 +10,144 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="registration-page">
-
-  <!-- Header -->
   <header class="portal-header">
     <a href="index.html" class="logo"><span class="logo-text">THINKSTRA '26</span></a>
-    <a href="index.html" class="btn btn-outline btn-sm">Back to Home</a>
+    <a href="index.html" class="btn btn-outline btn-sm">Home</a>
   </header>
 
   <main class="portal-main">
     <div class="container">
-      
-      <!-- Progress Steps -->
       <div class="steps-container animate-reveal revealed">
-        <div class="step active" data-step="1"><div class="step-circle">1</div><span class="step-label">Personal Info</span></div>
+        <div class="step active" data-step="1"><div class="step-circle">1</div><span class="step-label">Info</span></div>
         <div class="step-line"></div>
-        <div class="step" data-step="2"><div class="step-circle">2</div><span class="step-label">Event Selection</span></div>
+        <div class="step" data-step="2"><div class="step-circle">2</div><span class="step-label">Events</span></div>
         <div class="step-line"></div>
         <div class="step" data-step="3"><div class="step-circle">3</div><span class="step-label">Payment</span></div>
       </div>
 
-      <!-- Form Wrapper -->
       <div class="form-wrapper animate-reveal revealed">
-        
-        <!-- Step 1: Personal Info -->
+        <!-- Step 1 -->
         <div class="form-step active" id="step-1">
           <h2 class="form-title">Personal Details</h2>
-          <p class="form-subtitle">Please fill in your information accurately.</p>
-          
-          <form id="registrationForm">
+          <form id="regForm">
             <div class="form-grid">
-              <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" placeholder="John Doe" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="john@example.com" required>
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" placeholder="+91 98765 43210" required>
-              </div>
-              <div class="form-group">
-                <label for="college">Institution Name</label>
-                <input type="text" id="college" placeholder="Your College Name" required>
-              </div>
-              <div class="form-group">
-                <label for="department">Department</label>
-                <select id="department" required>
-                  <option value="" disabled selected>Select Department</option>
-                  <option value="CSE">Computer Science (CSE)</option>
-                  <option value="IT">Information Technology (IT)</option>
-                  <option value="AIDS">AI & Data Science (AI-DS)</option>
-                  <option value="ECE">Electronics (ECE)</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="year">Year of Study</label>
-                <select id="year" required>
-                  <option value="" disabled selected>Select Year</option>
-                  <option value="1">1st Year</option>
-                  <option value="2">2nd Year</option>
-                  <option value="3">3rd Year</option>
-                  <option value="4">4th Year</option>
-                </select>
-              </div>
+              <div class="form-group"><label>Full Name</label><input type="text" id="fullName" required></div>
+              <div class="form-group"><label>Email</label><input type="email" id="email" required></div>
+              <div class="form-group"><label>Phone</label><input type="tel" id="phone" required></div>
+              <div class="form-group"><label>College</label><input type="text" id="college" required></div>
+              <div class="form-group"><label>Dept</label><select id="dept"><option>CSE</option><option>IT</option><option>AI-DS</option></select></div>
+              <div class="form-group"><label>Year</label><select id="year"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
             </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-primary btn-lg next-step" data-next="2">
-                Next Step
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-            </div>
+            <button type="button" class="btn btn-primary btn-lg next-step" onclick="nextStep(2)">Next</button>
           </form>
         </div>
 
-        <!-- Step 2: Event Selection -->
+        <!-- Step 2 -->
         <div class="form-step" id="step-2">
           <h2 class="form-title">Select Events</h2>
-          <p class="form-subtitle">Choose exactly 1 Technical and 1 Non-Technical event.</p>
+          <p>Select exactly 1 Technical & 1 Non-Technical.</p>
           
-          <div class="event-category-block">
-            <h3 class="category-heading">Technical Events <span class="req">(Required)</span></h3>
-            <div class="events-selection-grid">
-              <div class="event-option">
-                <input type="radio" id="tech-prompt" name="tech_event" value="Prompt Engineering" data-price="0" required>
-                <label for="tech-prompt" class="event-option-card">
-                  <div class="event-option-header">
-                    <span class="event-cat tech">Technical</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Prompt Engineering</h4>
-                </label>
-              </div>
-
-              <div class="event-option">
-                <input type="radio" id="tech-reverse" name="tech_event" value="Reverse Engineering" data-price="0">
-                <label for="tech-reverse" class="event-option-card">
-                  <div class="event-option-header">
-                    <span class="event-cat tech">Technical</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Reverse Engineering</h4>
-                </label>
-              </div>
-
-              <div class="event-option">
-                <input type="radio" id="tech-paper" name="tech_event" value="Paper Presentation" data-price="0">
-                <label for="tech-paper" class="event-option-card">
-                  <div class="event-option-header">
-                    <span class="event-cat tech">Technical</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Paper Presentation</h4>
-                </label>
-              </div>
-            </div>
+          <h4 style="color:var(--accent); margin:1rem 0 .5rem;">Technical</h4>
+          <div class="events-selection-grid">
+            <label class="event-option-card"><input type="radio" name="tech" value="Prompt Eng" data-price="0" required><span class="check-icon"></span><h4>Prompt Eng</h4></label>
+            <label class="event-option-card"><input type="radio" name="tech" value="Reverse Eng" data-price="0"><span class="check-icon"></span><h4>Reverse Eng</h4></label>
+            <label class="event-option-card"><input type="radio" name="tech" value="Paper" data-price="0"><span class="check-icon"></span><h4>Paper</h4></label>
           </div>
 
-          <div class="event-category-block">
-            <h3 class="category-heading">Non-Technical Events <span class="req">(Required)</span></h3>
-            <div class="events-selection-grid">
-              <div class="event-option">
-                <input type="radio" id="nontech-chess" name="nontech_event" value="Chess" data-price="50">
-                <label for="nontech-chess" class="event-option-card special">
-                  <div class="event-option-header">
-                    <span class="event-cat nontech">Non-Tech</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Chess Championship</h4>
-                  <span class="extra-fee-badge">+ Rs. 50</span>
-                </label>
-              </div>
-
-              <div class="event-option">
-                <input type="radio" id="nontech-act" name="nontech_event" value="Act It Out" data-price="0">
-                <label for="nontech-act" class="event-option-card">
-                  <div class="event-option-header">
-                    <span class="event-cat nontech">Non-Tech</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Act It Out</h4>
-                </label>
-              </div>
-
-              <div class="event-option">
-                <input type="radio" id="nontech-clues" name="nontech_event" value="Chase The Clues" data-price="0">
-                <label for="nontech-clues" class="event-option-card">
-                  <div class="event-option-header">
-                    <span class="event-cat nontech">Non-Tech</span>
-                    <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
-                  </div>
-                  <h4>Chase The Clues</h4>
-                </label>
-              </div>
-            </div>
+          <h4 style="color:var(--accent-alt); margin:1rem 0 .5rem;">Non-Technical</h4>
+          <div class="events-selection-grid">
+            <label class="event-option-card special"><input type="radio" name="nontech" value="Chess" data-price="50"><span class="check-icon"></span><h4>Chess (+Rs.50)</h4></label>
+            <label class="event-option-card"><input type="radio" name="nontech" value="Act" data-price="0"><span class="check-icon"></span><h4>Act It Out</h4></label>
+            <label class="event-option-card"><input type="radio" name="nontech" value="Treasure" data-price="0"><span class="check-icon"></span><h4>Treasure Hunt</h4></label>
           </div>
 
           <div class="form-actions">
-            <button type="button" class="btn btn-outline prev-step" data-prev="1">Back</button>
-            <button type="button" class="btn btn-primary btn-lg next-step" data-next="3">Proceed to Payment</button>
+            <button class="btn btn-outline" onclick="nextStep(1)">Back</button>
+            <button class="btn btn-primary btn-lg next-step" onclick="nextStep(3)">Proceed</button>
           </div>
         </div>
 
-        <!-- Step 3: Payment & Confirmation -->
+        <!-- Step 3 -->
         <div class="form-step" id="step-3">
           <h2 class="form-title">Payment</h2>
-          <p class="form-subtitle">Scan QR code or use UPI ID to pay.</p>
-
-          <div class="summary-card mini">
-            <div class="summary-row total">
-              <span>Total Amount</span>
-              <span class="price" id="totalPriceDisplay">Rs. 200</span>
-            </div>
+          <div class="summary-card mini"><span>Total:</span><span class="price" id="totalPrice">Rs. 200</span></div>
+          
+          <div class="qr-container">
+             <img src="payment-qr.png" alt="QR" class="static-qr">
+             <p>Scan to pay</p>
           </div>
 
-          <!-- Payment Tabs -->
-          <div class="payment-tabs">
-            <button class="pay-tab active" data-tab="qr">Scan QR Code</button>
-            <button class="pay-tab" data-tab="upi">UPI ID</button>
-          </div>
-
-          <div class="payment-content">
-            <!-- QR Code Section -->
-            <div class="pay-panel active" id="panel-qr">
-              <div class="qr-container">
-                <!-- REPLACE THIS IMAGE SRC WITH YOUR QR CODE IMAGE -->
-                <img src="payment-qr.png" alt="Payment QR Code" class="static-qr">
-                <p class="qr-amount-label">Scan to pay <span id="qrAmountLabel">Rs. 200</span></p>
-              </div>
-            </div>
-
-            <!-- UPI ID Section -->
-            <div class="pay-panel" id="panel-upi">
-              <div class="upi-id-box">
-                <span id="upiIdText">yourname@upi</span>
-                <button type="button" class="btn-copy" onclick="copyUPI()">Copy ID</button>
-              </div>
-              <p class="upi-note">Copy the UPI ID and pay using any UPI app.</p>
-            </div>
-          </div>
-
-          <!-- Upload Section -->
           <div class="upload-section">
-            <h4>Upload Payment Proof</h4>
-            <p class="upload-note">Upload a screenshot of your successful transaction.</p>
-            <div class="file-upload-wrapper">
-              <input type="file" id="paymentProof" accept="image/*">
-              <label for="paymentProof" class="file-upload-label">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <span>Upload Screenshot</span>
-              </label>
-              <span class="file-name" id="fileNameDisplay">No file chosen</span>
-            </div>
-          </div>
-
-          <!-- Confirmation Checkbox -->
-          <div class="confirmation-box">
-            <input type="checkbox" id="confirmPayment">
-            <label for="confirmPayment">
-              I confirm that I have paid <strong>Rs. <span id="confirmPrice">200</span></strong> and uploaded the proof.
-            </label>
-          </div>
-
-          <div class="form-actions final-step">
-            <button type="button" class="btn btn-outline prev-step" data-prev="2">Back</button>
-            <!-- Submit Button -->
-            <button type="button" id="submitBtn" class="btn btn-disabled btn-lg" disabled onclick="submitForm()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px; margin-right: 8px;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
-              Submit Registration
-            </button>
+            <h4>Upload Proof</h4>
+            <input type="file" id="proof">
           </div>
           
-          <p class="disclaimer">Ensure all details are correct. You cannot edit after submission.</p>
-        </div>
+          <div class="confirmation-box">
+            <input type="checkbox" id="conf">
+            <label for="conf">I confirm payment of <b id="confPrice">200</b></label>
+          </div>
 
+          <div class="form-actions">
+            <button class="btn btn-outline" onclick="nextStep(2)">Back</button>
+            <button id="submitBtn" class="btn btn-disabled btn-lg" disabled onclick="submitReg()">Submit</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- SCRIPT -->
   <script>
-    // ==========================================
-    // CONFIGURATION
-    // ==========================================
-    const UPI_ID = "yourname@upi"; // <--- CHANGE THIS
+    // 1. Security Check
+    const u = localStorage.getItem('thinkstra_user');
+    if(!u){ alert("Please login first."); window.location.href="index.html"; }
+    else {
+      const d = JSON.parse(u);
+      document.getElementById('fullName').value = d.name || '';
+      document.getElementById('email').value = d.email || '';
+    }
 
-    // ==========================================
-    // SECURITY CHECK (Redirect if not logged in)
-    // ==========================================
-    (function() {
-      const user = localStorage.getItem('thinkstra_user');
-      if (!user) {
-        alert("Access Denied. Please log in first.");
-        window.location.href = 'index.html';
-      } else {
-        // AUTO-FILL FORM
-        try {
-          const userData = JSON.parse(user);
-          document.getElementById('fullName').value = userData.name || '';
-          document.getElementById('email').value = userData.email || '';
-        } catch(e) { console.error("Error loading user data"); }
+    // 2. Logic
+    function nextStep(n){ 
+      if(n===2){ if(!document.getElementById('fullName').checkValidity()){alert('Fill all fields'); return;} }
+      if(n===3){ 
+        if(!document.querySelector('input[name="tech"]:checked') || !document.querySelector('input[name="nontech"]:checked')){ alert('Select events.'); return; }
+        calcPrice(); 
       }
-      document.getElementById('upiIdText').innerText = UPI_ID;
-    })();
+      document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
+      document.getElementById('step-'+n).classList.add('active');
+      document.querySelectorAll('.step').forEach((s,i)=>s.classList.toggle('active', i < n));
+    }
 
-    // ==========================================
-    // STEP NAVIGATION
-    // ==========================================
-    document.addEventListener('DOMContentLoaded', () => {
-      const steps = document.querySelectorAll('.form-step');
-      const stepIndicators = document.querySelectorAll('.step');
-      const nextBtns = document.querySelectorAll('.next-step');
-      const prevBtns = document.querySelectorAll('.prev-step');
-      const payTabs = document.querySelectorAll('.pay-tab');
-      const confirmBox = document.getElementById('confirmPayment');
-      const fileInput = document.getElementById('paymentProof');
-      const submitBtn = document.getElementById('submitBtn');
+    function calcPrice(){
+      let t=200;
+      const nt = document.querySelector('input[name="nontech"]:checked');
+      if(nt && nt.dataset.price) t += parseInt(nt.dataset.price);
+      document.getElementById('totalPrice').innerText = "Rs. "+t;
+      document.getElementById('confPrice').innerText = t;
+    }
 
-      function changeStep(stepNumber) {
-        steps.forEach(s => s.classList.remove('active'));
-        stepIndicators.forEach(s => s.classList.remove('active'));
-        document.getElementById(`step-${stepNumber}`).classList.add('active');
-        stepIndicators.forEach(indicator => {
-          if (parseInt(indicator.getAttribute('data-step')) <= parseInt(stepNumber)) indicator.classList.add('active');
-        });
-        if(stepNumber === '3') updatePrices();
-      }
-
-      function validateStep3() {
-        const isFileUploaded = fileInput.files.length > 0;
-        const isChecked = confirmBox.checked;
-        if (isFileUploaded && isChecked) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('btn-disabled');
-          submitBtn.classList.add('btn-primary');
-        } else {
-          submitBtn.disabled = true;
-          submitBtn.classList.add('btn-disabled');
-          submitBtn.classList.remove('btn-primary');
-        }
-      }
-
-      nextBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const nextStep = e.target.getAttribute('data-next');
-          if (nextStep === "2") {
-            const inputs = document.querySelectorAll('#step-1 input, #step-1 select');
-            let valid = true;
-            inputs.forEach(input => { if (!input.checkValidity()) { input.reportValidity(); valid = false; } });
-            if (!valid) return;
-          }
-          if (nextStep === "3") {
-            const techSelected = document.querySelector('input[name="tech_event"]:checked');
-            const nonTechSelected = document.querySelector('input[name="nontech_event"]:checked');
-            if(!techSelected || !nonTechSelected) { alert("Select one Technical and one Non-Technical event."); return; }
-          }
-          changeStep(nextStep);
-        });
-      });
-
-      prevBtns.forEach(btn => { btn.addEventListener('click', (e) => changeStep(e.target.getAttribute('data-prev'))); });
-
-      payTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          payTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
-          document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
-          document.getElementById(`panel-${tab.getAttribute('data-tab')}`).classList.add('active');
-        });
-      });
-
-      fileInput.addEventListener('change', function(e) {
-        document.getElementById('fileNameDisplay').textContent = e.target.files[0] ? e.target.files[0].name : "No file chosen";
-        validateStep3();
-      });
-      confirmBox.addEventListener('change', validateStep3);
+    document.getElementById('conf').addEventListener('change', function(){
+      const hasFile = document.getElementById('proof').files.length > 0;
+      const btn = document.getElementById('submitBtn');
+      if(this.checked && hasFile){ btn.disabled=false; btn.classList.remove('btn-disabled'); btn.classList.add('btn-primary'); }
+      else { btn.disabled=true; btn.classList.add('btn-disabled'); btn.classList.remove('btn-primary'); }
     });
+    document.getElementById('proof').addEventListener('change', ()=>document.getElementById('conf').dispatchEvent(new Event('change')));
 
-    // ==========================================
-    // PRICE CALCULATION
-    // ==========================================
-    function calculateTotal() {
-      let total = 200;
-      const nonTechSelected = document.querySelector('input[name="nontech_event"]:checked');
-      if(nonTechSelected) { const price = parseInt(nonTechSelected.getAttribute('data-price')); if(price > 0) total += price; }
-      return total;
-    }
-
-    function updatePrices() {
-      const amount = calculateTotal();
-      document.getElementById('totalPriceDisplay').textContent = `Rs. ${amount}`;
-      document.getElementById('qrAmountLabel').textContent = `Rs. ${amount}`;
-      document.getElementById('confirmPrice').textContent = amount;
-    }
-
-    function copyUPI() {
-      navigator.clipboard.writeText(UPI_ID).then(() => {
-        const btn = document.querySelector('.btn-copy');
-        btn.textContent = "Copied!";
-        setTimeout(() => { btn.textContent = "Copy ID"; }, 1500);
-      });
-    }
-
-    // ==========================================
-    // FORM SUBMISSION (With Code Generation)
-    // ==========================================
-    function submitForm() {
+    function submitReg(){
+      const code = 'TS26-' + Math.random().toString(36).substring(2,8).toUpperCase();
+      localStorage.setItem('registration_code', code);
+      
       const name = document.getElementById('fullName').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const college = document.getElementById('college').value;
-      const dept = document.getElementById('department').value;
-      const year = document.getElementById('year').value;
+      const tech = document.querySelector('input[name="tech"]:checked').value;
+      const ntech = document.querySelector('input[name="nontech"]:checked').value;
+      const price = document.getElementById('confPrice').innerText;
+
+      const subject = "Registration: "+name;
+      const body = `Name: ${name}\nEmail: ${document.getElementById('email').value}\nEvents: ${tech}, ${ntech}\nPaid: ${price}\nCode: ${code}`;
       
-      const techEvent = document.querySelector('input[name="tech_event"]:checked')?.value || "None";
-      const nonTechEvent = document.querySelector('input[name="nontech_event"]:checked')?.value || "None";
-      const amount = calculateTotal();
-
-      // 1. Generate Unique Code
-      const uniqueCode = 'TS26-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-
-      // 2. Save Code to LocalStorage
-      localStorage.setItem('registration_code', uniqueCode);
-
-      const subject = `THINKSTRA '26 Registration: ${name}`;
-      const body = `
-THINKSTRA '26 REGISTRATION
---------------------------
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-College: ${college}
-Department: ${dept} (${year} Year)
-
-Events: 
-- Technical: ${techEvent}
-- Non-Technical: ${nonTechEvent}
-
-Amount Paid: Rs. ${amount}
-
-GENERATED UNIQUE ID: ${uniqueCode}
-(Use this ID for Team Participation)
-      `;
-
-      const mailtoLink = `mailto:thinkstra2x@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      alert("Registration Successful!\n\nYour Unique ID is: " + uniqueCode + "\n\nWe are opening your email client. Please attach the payment proof and send the email to confirm.");
-      window.location.href = mailtoLink;
+      alert("Success! Your Unique ID is: "+code+"\n\nOpening email...");
+      window.location.href = `mailto:thinkstra2x@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
   </script>
 </body>
