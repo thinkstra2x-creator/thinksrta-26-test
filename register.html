@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,46 +10,26 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="registration-page">
-    <!-- Authentication Check & Auto-fill -->
-  <script>
-    // 1. Security Check: Redirect if not logged in
-    (function() {
-      const user = localStorage.getItem('thinkstra_user');
-      if (!user) {
-        alert("Access Denied. Please log in first.");
-        window.location.href = 'index.html';
-      }
-    })();
-  </script>
 
-
+  <!-- Header -->
   <header class="portal-header">
-    <a href="index.html" class="logo">
-      <span class="logo-text">THINKSTRA '26</span>
-    </a>
+    <a href="index.html" class="logo"><span class="logo-text">THINKSTRA '26</span></a>
     <a href="index.html" class="btn btn-outline btn-sm">Back to Home</a>
   </header>
 
   <main class="portal-main">
     <div class="container">
       
+      <!-- Progress Steps -->
       <div class="steps-container animate-reveal revealed">
-        <div class="step active" data-step="1">
-          <div class="step-circle">1</div>
-          <span class="step-label">Personal Info</span>
-        </div>
+        <div class="step active" data-step="1"><div class="step-circle">1</div><span class="step-label">Personal Info</span></div>
         <div class="step-line"></div>
-        <div class="step" data-step="2">
-          <div class="step-circle">2</div>
-          <span class="step-label">Event Selection</span>
-        </div>
+        <div class="step" data-step="2"><div class="step-circle">2</div><span class="step-label">Event Selection</span></div>
         <div class="step-line"></div>
-        <div class="step" data-step="3">
-          <div class="step-circle">3</div>
-          <span class="step-label">Payment</span>
-        </div>
+        <div class="step" data-step="3"><div class="step-circle">3</div><span class="step-label">Payment</span></div>
       </div>
 
+      <!-- Form Wrapper -->
       <div class="form-wrapper animate-reveal revealed">
         
         <!-- Step 1: Personal Info -->
@@ -192,9 +171,7 @@
 
           <div class="form-actions">
             <button type="button" class="btn btn-outline prev-step" data-prev="1">Back</button>
-            <button type="button" class="btn btn-primary btn-lg next-step" data-next="3">
-              Proceed to Payment
-            </button>
+            <button type="button" class="btn btn-primary btn-lg next-step" data-next="3">Proceed to Payment</button>
           </div>
         </div>
 
@@ -217,14 +194,11 @@
           </div>
 
           <div class="payment-content">
-            
-            <!-- QR Code Section (Static Image) -->
+            <!-- QR Code Section -->
             <div class="pay-panel active" id="panel-qr">
               <div class="qr-container">
-                <!-- =========================== -->
-                <!-- REPLACE THIS IMAGE SRC -->
+                <!-- REPLACE THIS IMAGE SRC WITH YOUR QR CODE IMAGE -->
                 <img src="payment-qr.png" alt="Payment QR Code" class="static-qr">
-                <!-- =========================== -->
                 <p class="qr-amount-label">Scan to pay <span id="qrAmountLabel">Rs. 200</span></p>
               </div>
             </div>
@@ -243,7 +217,6 @@
           <div class="upload-section">
             <h4>Upload Payment Proof</h4>
             <p class="upload-note">Upload a screenshot of your successful transaction.</p>
-            
             <div class="file-upload-wrapper">
               <input type="file" id="paymentProof" accept="image/*">
               <label for="paymentProof" class="file-upload-label">
@@ -268,8 +241,7 @@
 
           <div class="form-actions final-step">
             <button type="button" class="btn btn-outline prev-step" data-prev="2">Back</button>
-            
-            <!-- Submit Button (Disabled by default) -->
+            <!-- Submit Button -->
             <button type="button" id="submitBtn" class="btn btn-disabled btn-lg" disabled onclick="submitForm()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px; margin-right: 8px;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
               Submit Registration
@@ -283,15 +255,15 @@
     </div>
   </main>
 
+  <!-- SCRIPT -->
   <script>
-       // ==========================================
+    // ==========================================
     // CONFIGURATION
     // ==========================================
     const UPI_ID = "yourname@upi"; // <--- CHANGE THIS
-    const PAYEE_NAME = "THINKSTRA 26";
 
     // ==========================================
-    // SECURITY CHECK (Mandatory Login)
+    // SECURITY CHECK (Redirect if not logged in)
     // ==========================================
     (function() {
       const user = localStorage.getItem('thinkstra_user');
@@ -299,17 +271,18 @@
         alert("Access Denied. Please log in first.");
         window.location.href = 'index.html';
       } else {
-        // AUTO-FILL FORM if user exists
+        // AUTO-FILL FORM
         try {
           const userData = JSON.parse(user);
-          if (document.getElementById('fullName')) document.getElementById('fullName').value = userData.name || '';
-          if (document.getElementById('email')) document.getElementById('email').value = userData.email || '';
+          document.getElementById('fullName').value = userData.name || '';
+          document.getElementById('email').value = userData.email || '';
         } catch(e) { console.error("Error loading user data"); }
       }
+      document.getElementById('upiIdText').innerText = UPI_ID;
     })();
 
     // ==========================================
-    // STEP NAVIGATION LOGIC
+    // STEP NAVIGATION
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       const steps = document.querySelectorAll('.form-step');
@@ -325,20 +298,15 @@
         steps.forEach(s => s.classList.remove('active'));
         stepIndicators.forEach(s => s.classList.remove('active'));
         document.getElementById(`step-${stepNumber}`).classList.add('active');
-        
         stepIndicators.forEach(indicator => {
-          if (parseInt(indicator.getAttribute('data-step')) <= parseInt(stepNumber)) {
-            indicator.classList.add('active');
-          }
+          if (parseInt(indicator.getAttribute('data-step')) <= parseInt(stepNumber)) indicator.classList.add('active');
         });
-
         if(stepNumber === '3') updatePrices();
       }
 
       function validateStep3() {
         const isFileUploaded = fileInput.files.length > 0;
         const isChecked = confirmBox.checked;
-        
         if (isFileUploaded && isChecked) {
           submitBtn.disabled = false;
           submitBtn.classList.remove('btn-disabled');
@@ -356,48 +324,33 @@
           if (nextStep === "2") {
             const inputs = document.querySelectorAll('#step-1 input, #step-1 select');
             let valid = true;
-            inputs.forEach(input => {
-              if (!input.checkValidity()) { input.reportValidity(); valid = false; }
-            });
+            inputs.forEach(input => { if (!input.checkValidity()) { input.reportValidity(); valid = false; } });
             if (!valid) return;
           }
           if (nextStep === "3") {
             const techSelected = document.querySelector('input[name="tech_event"]:checked');
             const nonTechSelected = document.querySelector('input[name="nontech_event"]:checked');
-            if(!techSelected || !nonTechSelected) {
-              alert("Please select one Technical and one Non-Technical event.");
-              return;
-            }
+            if(!techSelected || !nonTechSelected) { alert("Select one Technical and one Non-Technical event."); return; }
           }
           changeStep(nextStep);
         });
       });
 
-      prevBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          changeStep(e.target.getAttribute('data-prev'));
-        });
-      });
+      prevBtns.forEach(btn => { btn.addEventListener('click', (e) => changeStep(e.target.getAttribute('data-prev'))); });
 
       payTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          payTabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const tabId = tab.getAttribute('data-tab');
+          payTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
           document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
-          document.getElementById(`panel-${tabId}`).classList.add('active');
+          document.getElementById(`panel-${tab.getAttribute('data-tab')}`).classList.add('active');
         });
       });
 
       fileInput.addEventListener('change', function(e) {
-        const fileName = e.target.files[0] ? e.target.files[0].name : "No file chosen";
-        document.getElementById('fileNameDisplay').textContent = fileName;
+        document.getElementById('fileNameDisplay').textContent = e.target.files[0] ? e.target.files[0].name : "No file chosen";
         validateStep3();
       });
-
       confirmBox.addEventListener('change', validateStep3);
-      
-      document.getElementById('upiIdText').innerText = UPI_ID;
     });
 
     // ==========================================
@@ -406,10 +359,7 @@
     function calculateTotal() {
       let total = 200;
       const nonTechSelected = document.querySelector('input[name="nontech_event"]:checked');
-      if(nonTechSelected) {
-        const price = parseInt(nonTechSelected.getAttribute('data-price'));
-        if(price > 0) total += price;
-      }
+      if(nonTechSelected) { const price = parseInt(nonTechSelected.getAttribute('data-price')); if(price > 0) total += price; }
       return total;
     }
 
@@ -428,7 +378,7 @@
       });
     }
 
-       // ==========================================
+    // ==========================================
     // FORM SUBMISSION (With Code Generation)
     // ==========================================
     function submitForm() {
@@ -440,7 +390,7 @@
       const year = document.getElementById('year').value;
       
       const techEvent = document.querySelector('input[name="tech_event"]:checked')?.value || "None";
-      const nonTechEvent = document.querySelector('input[name="nontechnical_event"]:checked')?.value || "None";
+      const nonTechEvent = document.querySelector('input[name="nontech_event"]:checked')?.value || "None";
       const amount = calculateTotal();
 
       // 1. Generate Unique Code
@@ -471,6 +421,9 @@ GENERATED UNIQUE ID: ${uniqueCode}
 
       const mailtoLink = `mailto:thinkstra2x@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       
-      alert("Registration Successful!\n\nYour Unique ID is: " + uniqueCode + "\n\nWe are opening your email client. Please send the email to confirm.");
+      alert("Registration Successful!\n\nYour Unique ID is: " + uniqueCode + "\n\nWe are opening your email client. Please attach the payment proof and send the email to confirm.");
       window.location.href = mailtoLink;
     }
+  </script>
+</body>
+</html>
