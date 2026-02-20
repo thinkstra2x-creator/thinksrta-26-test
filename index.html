@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="THINKSTRA '26 - National Level Technical Symposium">
+  <title>THINKSTRA '26 | AI & Data Science Symposium</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Background -->
+  <div class="bg-animation" aria-hidden="true">
+    <div class="gradient-sphere sphere-1"></div>
+    <div class="gradient-sphere sphere-2"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Header -->
+  <header class="main-header" role="banner">
+    <div class="container nav-wrapper">
+      <a href="#" class="logo"><span class="logo-text">THINKSTRA</span></a>
+      
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#events" class="nav-link">Events</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        
+        <!-- Auth Section -->
+        <div id="auth-section" class="auth-section">
+          <button id="loginBtn" class="btn btn-outline btn-sm">Login with Gmail</button>
+          <div id="userProfile" class="user-profile" style="display: none;">
+            <img id="userImg" src="https://ui-avatars.com/api/?name=Guest" alt="User" class="user-avatar">
+            <span id="userName" class="user-name">Guest</span>
+            <button onclick="signOut()" class="btn btn-sm btn-ghost">Logout</button>
+          </div>
+          <button onclick="goToRegistration()" class="btn btn-primary btn-sm nav-cta">Register Now</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    
+    <!-- Participant Dashboard (Hidden by default) -->
+    <section id="dashboard" class="dashboard-section" style="display: none;">
+      <div class="container">
+        <div class="dashboard-grid">
+          <div class="dash-card profile-card">
+            <div class="profile-header">
+              <img id="dashUserImg" src="https://ui-avatars.com/api/?name=Guest" alt="User" class="profile-avatar">
+              <div class="profile-info">
+                <h3 id="dashUserName">User Name</h3>
+                <p id="dashUserEmail">email@example.com</p>
+                <span class="user-badge">Registered Participant</span>
+              </div>
+            </div>
+            <div class="unique-code-box">
+              <span>Your Unique ID</span>
+              <div class="code-display">
+                <strong id="dashUserCode">TS26-XXXXXX</strong>
+                <button onclick="copyUserCode()" class="btn-copy-code">Copy</button>
+              </div>
+              <p class="code-hint">Share this code with your team members.</p>
+            </div>
+          </div>
+
+          <div class="dash-card team-card">
+            <h3>Team Management</h3>
+            <div id="teamCreateForm" class="team-form">
+              <h4>Create a New Team</h4>
+              <p>You are the Team Leader.</p>
+              <div class="form-group">
+                <input type="text" id="teamNameInput" placeholder="Enter Team Name">
+              </div>
+              <button onclick="createTeam()" class="btn btn-primary btn-block">Create Team</button>
+            </div>
+            <div id="teamView" style="display:none;">
+              <div class="team-badge">
+                <span>Team Name:</span>
+                <h2 id="currentTeamName">Team Alpha</h2>
+              </div>
+              <div class="team-members">
+                <h5>Team Members</h5>
+                <ul id="teamMembersList"></ul>
+              </div>
+              <button onclick="leaveTeam()" class="btn btn-outline btn-sm">Leave Team</button>
+            </div>
+            <div class="divider"><span>OR</span></div>
+            <div id="joinTeamSection">
+              <h4>Join an Existing Team</h4>
+              <p>Enter your Team Leader's Unique ID.</p>
+              <div class="form-group">
+                <input type="text" id="joinCodeInput" placeholder="e.g., TS26-A1B2C3">
+              </div>
+              <button onclick="joinTeam()" class="btn btn-secondary btn-block">Join Team</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-content">
+        <div class="hero-badge animate-reveal"><span class="badge-dot"></span><span>Dr. SIVANTHI ADITANAR COLLEGE OF ENGINEERING</span></div>
+        <h1 class="hero-title animate-reveal delay-1"><span class="title-outline">THINK</span>STRA<span class="title-year">'26</span></h1>
+        <p class="hero-subtitle animate-reveal delay-2">Department of Artificial Intelligence & Data Science presents a national level technical symposium.</p>
+        <div class="hero-cta animate-reveal delay-3">
+          <button onclick="goToRegistration()" class="btn btn-primary btn-lg">Register Now</button>
+          <a href="#events" class="btn btn-outline btn-lg">Explore Events</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details Section -->
+    <section id="details" class="details-section">
+      <div class="container">
+        <div class="details-grid">
+          <div class="detail-card animate-reveal">
+            <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+            <div class="detail-content"><h3 class="detail-label">Event Date</h3><p class="detail-value">March 15, 2026</p></div>
+          </div>
+          <div class="detail-card animate-reveal delay-1">
+            <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+            <div class="detail-content"><h3 class="detail-label">Venue</h3><p class="detail-value">DSACE Campus</p></div>
+          </div>
+          <div class="detail-card animate-reveal delay-2">
+            <div class="detail-icon accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+            <div class="detail-content"><h3 class="detail-label">Deadline</h3><p class="detail-value">March 10, 2026</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card animate-reveal"><span class="stat-number">8+</span><span class="stat-label">Events</span></div>
+          <div class="stat-card animate-reveal delay-1"><span class="stat-number">2</span><span class="stat-label">Categories</span></div>
+          <div class="stat-card animate-reveal delay-2"><span class="stat-number">100+</span><span class="stat-label">Participants</span></div>
+          <div class="stat-card animate-reveal delay-3"><span class="stat-number">1</span><span class="stat-label">Day Event</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events-section">
+      <div class="container">
+        <header class="section-header animate-reveal">
+          <span class="section-tag">Competitions</span>
+          <h2 class="section-title">Event Categories</h2>
+        </header>
+        <div class="filter-tabs animate-reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="technical">Technical</button>
+          <button class="filter-btn" data-filter="nontechnical">Non-Technical</button>
+        </div>
+        <div class="events-grid" id="eventsGrid"></div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content">
+            <span class="section-tag animate-reveal">About The Event</span>
+            <h2 class="about-title animate-reveal delay-1">Where Innovation Meets Excellence</h2>
+            <p class="about-text animate-reveal delay-2">THINKSTRA '26 is the flagship technical symposium organized by the Department of AI & DS.</p>
+            <div class="animate-reveal delay-3"><button onclick="goToRegistration()" class="btn btn-primary">Join Us Today</button></div>
+          </div>
+          <div class="about-visual animate-reveal">
+            <div class="rotating-border"></div>
+            <div class="logo-container">
+              <svg class="rotating-text" viewBox="0 0 200 200"><defs><path id="textCircle" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"/></defs><text fill="currentColor" font-size="11" font-weight="600" letter-spacing="3"><textPath href="#textCircle">INNOVATION • CREATIVITY • TECHNOLOGY • EXCELLENCE</textPath></text></svg>
+              <img src="logo.png" alt="THINKSTRA Logo" class="center-logo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+      <div class="container">
+        <header class="section-header animate-reveal">
+          <span class="section-tag">Team</span>
+          <h2 class="section-title">Student Coordinators</h2>
+        </header>
+        <div class="team-grid">
+          <div class="team-card animate-reveal"><div class="team-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><h3 class="team-name">Student Name 1</h3><p class="team-role">Event Head</p></div>
+          <div class="team-card animate-reveal delay-1"><div class="team-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><h3 class="team-name">Student Name 2</h3><p class="team-role">Technical Lead</p></div>
+          <div class="team-card animate-reveal delay-2"><div class="team-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><h3 class="team-name">Student Name 3</h3><p class="team-role">Design Lead</p></div>
+          <div class="team-card animate-reveal delay-3"><div class="team-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><h3 class="team-name">Student Name 4</h3><p class="team-role">Logistics Head</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Section -->
+    <section id="social" class="social-section">
+      <div class="container text-center">
+        <div class="social-content animate-reveal">
+          <h2 class="section-title">Follow Our Journey</h2>
+          <p class="social-subtitle">Stay updated with announcements.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact" class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><h3 class="footer-logo">THINKSTRA '26</h3><p class="footer-desc">Department of AI & DS</p></div>
+        <div class="footer-nav"><h4 class="footer-heading">Links</h4><ul class="footer-links"><li><a href="#events">Events</a></li></ul></div>
+        <div class="footer-contact"><h4 class="footer-heading">Contact</h4><ul class="footer-links"><li><a href="mailto:thinkstra2x@gmail.com">Email Us</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>Designed by AI & DS Dept. 2026.</p></div>
+    </div>
+  </footer>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="script.js"></script>
+</body>
+</html>
